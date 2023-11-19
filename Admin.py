@@ -50,12 +50,12 @@ class Admin:
    def Validation(self) :
       GolfPlate = self.Golf_Plate_Entry.get()
       College = self.College_Combobox.get()
+      # Check if Golf cart exist or not
       for ID in Cursor.execute("""SELECT GolfPlate FROM GOALF""") :
          if ID == GolfPlate :
-            messagebox.showerror("Error", "Golf is already exist")
             return False
-
-      if len(GolfPlate) > 0 and len(College) > 0 and GolfPlate.isdigit():
+      # Check if the entry empty or not digit 
+      if len(GolfPlate) > 0 and len(College) > 0 and GolfPlate.isdigit() and College.isalpha:
          return True
       else :
          return False
@@ -64,6 +64,7 @@ class Admin:
       if self.Validation() :
          Plate = self.Golf_Plate_Entry.get()
          College = self.College_Combobox.get()
+         # Store the information in the central database
          Cursor.execute(f"""INSERT INTO GOALF VALUES("{Plate}", "{College}")""")
          Connection.commit()
 
@@ -71,7 +72,11 @@ class Admin:
          self.Golf_Plate_Entry.delete(0,"end")
          self.College_Combobox.delete(0, "end")
       else :
-         messagebox.showerror("Error", "Can't create empty entry")
+         # Can't create empty entry
+         # Golf is already exist
+         # Enter a digit number
+         # College is not correct
+         messagebox.showerror("Error", "Something wrong")
 
    def BackUpButton(self) :
       # Student 
@@ -95,5 +100,3 @@ class Admin:
          csv_writer.writerow(row)
          for Reser in Cursor.execute("""SELECT * FROM RESERVATIONS""") :
             csv_writer.writerow(Reser)
-   
-Admin()
