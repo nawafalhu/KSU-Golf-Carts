@@ -24,7 +24,7 @@ Cursor.execute(
 
 
 # Cursor.execute(
-#     """CREATE TABLE IF NOT EXISTS Reservations(
+#     """CREATE TABLE IF NOT EXISTS RESERVATIONS(
        
 #     )"""
 # )
