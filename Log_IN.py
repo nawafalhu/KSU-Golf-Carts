@@ -67,7 +67,8 @@ class Login_W:
 
     def go_signup(self):
         self.Login.destroy()
-        from Sing_UP import Sign_Up_Window
-        Sign_Up_Window()
+        from Sing_UP import sing_up
+        sing_up()
+
 
 
