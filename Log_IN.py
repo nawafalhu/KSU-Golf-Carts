@@ -71,4 +71,4 @@ class Login_W:
         sing_up()
 
 
-
+Login_W()
