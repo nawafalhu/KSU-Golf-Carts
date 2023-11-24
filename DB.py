@@ -3,9 +3,10 @@ import sqlite3
 Connection = sqlite3.connect("KSU-Galf.db")
 Cursor = Connection.cursor()
 
+# Student Table
 Cursor.execute(
     """CREATE TABLE IF NOT EXISTS STUDENT (
-       StudentID INT PRIMARY KEY NOT NULL,
+       StudentID INTEGER PRIMARY KEY NOT NULL,
        FirstName TEXT NOT NULL,
        LastName TEXT  NULL,
        UserClass TEXT NULL,
@@ -15,17 +16,22 @@ Cursor.execute(
     )"""
 )
 
+# Golf Table
 Cursor.execute(
-    """CREATE TABLE IF NOT EXISTS GOALF(
-       GolfPlate INT PRIMARY KEY NOT NULL,
+    """CREATE TABLE IF NOT EXISTS GOLF(
+       GolfPlate INTEGER PRIMARY KEY NOT NULL,
        COLLEGE TEXT NOT NULL
     )"""
 )
 
-
-# Cursor.execute(
-#     """CREATE TABLE IF NOT EXISTS RESERVATIONS(
-       
-#     )"""
-# )
+# Reservations Table
+Cursor.execute(
+    """CREATE TABLE IF NOT EXISTS RESERVATIONS(
+       StudentID INT NOT NULL,
+       COLLEGE TEXT NOT NULL,
+       GolfPlate INTEGER NOT NULL,
+       Date TEXT NOT NULL,
+       PRIMARY KEY (StudentID, GolfPlate)
+    );"""
+)
 
