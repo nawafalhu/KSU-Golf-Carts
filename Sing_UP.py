@@ -35,7 +35,7 @@ class sing_up:
         self.submit_bt = tkinter.Button(self.main_frame, text='إنشاء', width=15, height=2, font=('Arial', 12, 'bold'),
                                         command=self.submit_table).grid(column=0, row=20, pady=50)
         self.login_bt = tkinter.Button(self.main_frame, text='تسجيل الدخول ', width=15, height=2,
-                                       font=('Arial', 12, 'bold')).grid(column=3, row=20,pady=50)
+                                       font=('Arial', 12, 'bold'), command=self.open_login).grid(column=3, row=20,pady=50)
         self.main_frame.pack(fill='both', padx=50, pady=50)
         self.fname_label.grid(row=4, column=0, pady=50)
         self.fname_entry.grid(row=4, column=1, pady=50)
@@ -125,7 +125,8 @@ class sing_up:
 
     def open_login(self):
         self.main_window.destroy()
-        #log = Login_Window()
+        from Log_IN import Login_W
+        Login_W()
 
     def is_int(self, x):
         try:
@@ -133,5 +134,5 @@ class sing_up:
             return True
         except:
             return False
-
-xx=sing_up()
+        
+sing_up()

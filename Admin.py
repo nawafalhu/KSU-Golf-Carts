@@ -1,9 +1,9 @@
 import tkinter as tk
-import Sing_UP
 from tkinter import ttk
 from DB import *
 from tkinter import messagebox
 import csv
+import Log_IN
 
 Color = "#48A3BC"
 Font = ('Arial', 12, 'bold')
@@ -23,7 +23,7 @@ class Admin:
       self.Golf_Plate_Entry.grid(row=0, column=1, padx=10, pady=10)
 
       # Enter the college to which this golf cart belongs.
-      Colleges = ["Business Administration", "Architecture and Planning", "Computer and Information Sciences", "Food and Agricultural Sciences", "Engineering", "Science"]
+      Colleges = ["Business Administration", "Architecture and Planning", "Computer Sciences", "Agricultural Sciences", "Engineering", "Science"]
       self.College_label = tk.Label(self.window, text="Enter the college: ",width=40, padx=10, pady=10, bg=Color, font=Font, justify=tk.CENTER)
       self.College_label.grid(row=1, column=0)
 
@@ -45,14 +45,15 @@ class Admin:
 
    def logout(self):
       self.window.destroy()
-      Sing_UP.sing_up()
+      from Sing_UP import sing_up
+      sing_up()
 
    def Validation(self) :
       GolfPlate = self.Golf_Plate_Entry.get()
       College = self.College_Combobox.get()
       # Check if Golf cart exist or not
-      for ID in Cursor.execute("""SELECT GolfPlate FROM GOALF""") :
-         if ID == GolfPlate :
+      for ID in Cursor.execute("""SELECT GolfPlate FROM GOLF""") :
+         if ID[0] == GolfPlate :
             return False
       # Check if the entry empty or not digit 
       if len(GolfPlate) > 0 and len(College) > 0 and GolfPlate.isdigit() and College.isalpha:
@@ -61,21 +62,24 @@ class Admin:
          return False
 
    def Added_golf(self) :
-      if self.Validation() :
-         Plate = self.Golf_Plate_Entry.get()
-         College = self.College_Combobox.get()
-         # Store the information in the central database
-         Cursor.execute(f"""INSERT INTO GOALF VALUES("{Plate}", "{College}")""")
-         Connection.commit()
+      try :
+         if self.Validation() :
+            Plate = self.Golf_Plate_Entry.get()
+            College = self.College_Combobox.get()
+            # Store the information in the central database
+            Cursor.execute(f"""INSERT INTO GOLF VALUES ("{Plate}", "{College}")""")
+            Connection.commit()
 
-         messagebox.showinfo("Done", "Golf Added Successfully")
-         self.Golf_Plate_Entry.delete(0,"end")
-         self.College_Combobox.delete(0, "end")
-      else :
-         # Can't create empty entry
-         # Golf is already exist
-         # Enter a digit number
-         # College is not correct
+            messagebox.showinfo("Done", "Golf Added Successfully")
+            self.Golf_Plate_Entry.delete(0,"end")
+            self.College_Combobox.delete(0, "end")
+         else :
+            # Can't create empty entry
+            # Golf is already exist
+            # Enter a digit number
+            # College is not correct
+            messagebox.showerror("Error", "Something wrong")
+      except sqlite3.IntegrityError:
          messagebox.showerror("Error", "Something wrong")
 
    def BackUpButton(self) :
