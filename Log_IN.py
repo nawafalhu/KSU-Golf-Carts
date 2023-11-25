@@ -28,6 +28,7 @@ class Login_W:
 
     def go_admin(self):
         if self.IDText.get()=="Admin" and self.passwordText.get()=="123456":
+            self.Login.update()
             self.Login.destroy()
             from Admin import Admin
             Admin()
@@ -60,15 +61,12 @@ class Login_W:
             else:
                 self.go_user()
     def go_user(self):
+        self.Login.update()
         self.Login.destroy()
         from User import User
         User()
-
 
     def go_signup(self):
         self.Login.destroy()
         from Sing_UP import sing_up
         sing_up()
-
-
-Login_W()

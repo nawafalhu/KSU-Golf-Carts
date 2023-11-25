@@ -44,6 +44,7 @@ class Admin:
       self.window.mainloop()
 
    def logout(self):
+      self.window.update()
       self.window.destroy()
       from Sing_UP import sing_up
       sing_up()
