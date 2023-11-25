@@ -126,7 +126,8 @@ class sing_up:
     def open_login(self):
         self.main_window.destroy()
         from Log_IN import Login_W
-        Login_W()
+        self.login_window = Login_W()  # Create a new instance of Login_W
+               
 
     def is_int(self, x):
         try:
