@@ -1,5 +1,4 @@
 # KSU Golf Carts
-
 ## Overview
 
 KSU Golf Carts is a reservation system designed to manage golf cart reservations within the KSU campus. The system provides a user-friendly interface for students, faculty, and staff to reserve golf carts conveniently.
