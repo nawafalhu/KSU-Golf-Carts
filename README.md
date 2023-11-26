@@ -14,7 +14,7 @@ OMAR ALMOHSEN 443101907
 TURKI ALJAMMAZ 443102093
 <br>
 
-## Features
+## Window
 
 - **Sign-Up Window:**
   - Capture user information, including first name, last name, user class, student ID, password, email address, and phone number.
