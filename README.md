@@ -7,9 +7,12 @@ Electric golf carts provide efficient mobility for students, faculty, and staff,
 KSUGolfCarts is a reservation system designed to manage golf cart reservations within the KSU campus. The system provides a user-friendly interface for students, faculty, and staff to reserve golf carts conveniently.
 
 ## Contributors
-NAWAF ALHOMAIDHI 442101288<br>
-OMAR ALMOHSEN 443101907<br>
-TURKI ALJAMMAZ 443102093<br>
+NAWAF ALHOMAIDHI 442101288
+<br>
+OMAR ALMOHSEN 443101907
+<br>
+TURKI ALJAMMAZ 443102093
+<br>
 
 ## Features
 
