@@ -12,7 +12,9 @@ class Admin:
    def __init__(self):
       self.window = tk.Tk()
       self.window.title("Admin")
-      self.window.minsize(width="600", height="450")
+      screen_width = self.window.winfo_screenwidth()
+      screen_height = self.window.winfo_screenheight()
+      self.window.geometry("{}x{}".format(screen_width, screen_height))
       self.window.config(padx=10, pady=80, bg=Color)
 
       # Enter the golf cart plate number
@@ -85,23 +87,25 @@ class Admin:
 
    def BackUpButton(self) :
       # Student 
-      with open("Student.csv", "w") as file :
+      with open("Student.csv", "w", newline='') as file :
          csv_writer = csv.writer(file)
          row = ["StudentID", "FirstName", "LastName", "UserClass", "Email", "Password", "Phone"]
          csv_writer.writerow(row)
          for student in Cursor.execute("""SELECT * FROM STUDENT""") :
             csv_writer.writerow(student)
       # Goalf
-      with open("Galf.csv", "w") as file :
+      with open("Golf.csv", "w", newline='') as file :
          csv_writer = csv.writer(file)
          row = ["GolfPlate", "College"]
          csv_writer.writerow(row)
-         for Goalf in Cursor.execute("""SELECT * FROM GOALF""") :
+         for Goalf in Cursor.execute("""SELECT * FROM GOLF""") :
             csv_writer.writerow(Goalf)
       # RESERVATIONS
-      with open("Reservations.csv", "w") as file :
+      with open("Reservations.csv", "w", newline='') as file :
          csv_writer = csv.writer(file)
-         row = []
+         # 112,Architecture and Planning,12,"9:30-10:00, 1/12/23"
+         row = ["StudentID","College", "Golf Cart Plate", "Time", "Date"]
          csv_writer.writerow(row)
          for Reser in Cursor.execute("""SELECT * FROM RESERVATIONS""") :
             csv_writer.writerow(Reser)
+      messagebox.showinfo("Done", "Backup Created")

@@ -10,8 +10,10 @@ class Login_W:
     def __init__(self):
         self.Login = tk.Tk()
         self.Login.title("Login")
-        self.Login.minsize(width="600", height="450")
-        self.Login.config(padx=10, pady=80, bg=Color)
+        screen_width = self.Login.winfo_screenwidth()
+        screen_height = self.Login.winfo_screenheight()
+        self.Login.geometry("{}x{}".format(screen_width, screen_height))
+        self.Login.config(padx=350, pady=100, bg=Color)
         self.UserID = tk.Label(self.Login, text="ID",font=Font, bg=Color, justify=tk.CENTER)
         self.UserID.grid(row=0, column=0)
         self.IDText = tk.Entry(self.Login, width=40,highlightthickness=1,  justify=tk.CENTER, font=Font)
@@ -70,3 +72,4 @@ class Login_W:
         self.Login.destroy()
         from Sing_UP import sing_up
         sing_up()
+Login_W()

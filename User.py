@@ -12,7 +12,9 @@ class User:
     def __init__(self, ID, User_Class):
         self.window = tk.Tk()
         self.window.title("User Window")
-        self.window.minsize(width="900", height="450")
+        screen_width = self.window.winfo_screenwidth()
+        screen_height = self.window.winfo_screenheight()
+        self.window.geometry("{}x{}".format(screen_width, screen_height))
         self.window.config(padx=10, pady=80, bg=Color)
 
         self.StudentID = ID
@@ -51,7 +53,7 @@ class User:
         id = 0
         for Row in Cursor.execute("""SELECT * FROM GOLF""") :
             self.Treeview_reserve.insert('', index='end', iid=id, text='', values=(Row[1], Row[0]))
-            id += 0
+            id += 1
         self.Treeview_reserve.pack(side="left", padx=10, pady=10)
 
         # TreeView for View my Reservations Tab
@@ -136,5 +138,4 @@ class User:
             self.Treeview_view.insert('', index='end', iid=count, text='', values=(Reserve[1], Reserve[2], Reserve[3]))
             count += 1
         self.Treeview_view.pack(padx=10, pady=10)
-
-User(112,'Student')
+User(113, "Student")

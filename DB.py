@@ -35,3 +35,4 @@ Cursor.execute(
     );"""
 )
 
+Cursor.execute(f'DROP TABLE IF EXISTS GALF')
