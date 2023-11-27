@@ -58,16 +58,18 @@ class User:
 
         # TreeView for View my Reservations Tab
         self.Treeview_view = ttk.Treeview(self.View_Tab)
-        self.Treeview_view['columns'] = ("College", "Golf Cart Plate", "Date")
+        self.Treeview_view['columns'] = ("College", "Golf Cart Plate", "Time","Date")
         self.Treeview_view.column("#0", width=0)
         self.Treeview_view.column("College", width=150, anchor='w')
         self.Treeview_view.column("Golf Cart Plate", width=150, anchor='center')
+        self.Treeview_view.column("Time", width=150, anchor='w')
         self.Treeview_view.column("Date", width=150, anchor='w')
 
         # heading
         self.Treeview_view.heading("#0", text="")
         self.Treeview_view.heading("College", text="College")
         self.Treeview_view.heading("Golf Cart Plate", text="Golf Cart Plate")
+        self.Treeview_view.heading("Time", text="Time")
         self.Treeview_view.heading("Date", text="Date")
 
         # Calender
@@ -113,29 +115,39 @@ class User:
         Sing_UP.sing_up()
 
     def Date(self):
-        self.Dates = f"{self.Times.get()}, {self.calender.get_date()}"
-        messagebox.showinfo("Done", "Date Selected Successfully")
+        self.Dates = f"{self.calender.get_date()}"
+        self.DateTime = f"{self.Times.get()}"
+        messagebox.showinfo("Done", "Date Selected Successfully")        
 
     def Reserve(self):
-        try:
-            self.Details = self.Treeview_reserve.item(self.Treeview_reserve.focus())
-            College_Selected = self.Details.get("values")[0]
-            Golf_Selected = self.Details.get("values")[1]
-            Cursor.execute("""INSERT INTO RESERVATIONS (StudentID, COLLEGE, GolfPlate, Date)
-                              VALUES (?, ?, ?, ?)""", (self.StudentID, College_Selected, Golf_Selected, self.Dates))
-            Connection.commit()
-            messagebox.showinfo('Done', 'Your Reservation is Complete')
-        except AttributeError:
-            messagebox.showerror("Error", "Select Date First")
-        except IndexError :
-            messagebox.showerror('Error', 'Please Select a Golf Cart')
-        except sqlite3.IntegrityError :
-            messagebox.showerror("Error", "Select Another Date and Golf Cart")
+            try:
+                self.Details = self.Treeview_reserve.item(self.Treeview_reserve.focus())
+                self.College_Selected = self.Details.get("values")[0]
+                self.Golf_Selected = self.Details.get("values")[1]
+                # Check if the Golf cart is reserved or not
+                for Row in Cursor.execute("""SELECT * FROM RESERVATIONS""") :
+                     if Row[2] == self.Golf_Selected and Row[3] == self.DateTime and Row[4] == self.Dates:
+                        messagebox.showerror("Error", "The Golf Cart is Reserved")
+                        return False
+                     
+                Cursor.execute("""INSERT INTO RESERVATIONS (StudentID, COLLEGE, GolfPlate, Time, Date)
+                                VALUES (?, ?, ?, ?, ?)""", (self.StudentID, self.College_Selected, self.Golf_Selected, self.DateTime, self.Dates))
+                Connection.commit()
+                messagebox.showinfo('Done', 'Your Reservation is Complete')                  
 
+            except AttributeError:
+                messagebox.showerror("Error", "Select Date First")
+                return False
+            except IndexError :
+                messagebox.showerror('Error', 'Please Select a Golf Cart')
+                return False
+            except sqlite3.IntegrityError :
+                messagebox.showerror("Error", "Select Another Date and Golf Cart")
+                return False
     def ViewMyReservations(self):
         count = 0
         for Reserve in Cursor.execute(f"""SELECT * FROM RESERVATIONS WHERE StudentID == '{self.StudentID}' """) :
-            self.Treeview_view.insert('', index='end', iid=count, text='', values=(Reserve[1], Reserve[2], Reserve[3]))
+            self.Treeview_view.insert('', index='end', iid=count, text='', values=(Reserve[1], Reserve[2], Reserve[3], Reserve[4]))
             count += 1
         self.Treeview_view.pack(padx=10, pady=10)
-User(113, "Student")
+User(114, "Student")

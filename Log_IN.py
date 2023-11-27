@@ -72,4 +72,3 @@ class Login_W:
         self.Login.destroy()
         from Sing_UP import sing_up
         sing_up()
-Login_W()

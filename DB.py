@@ -30,9 +30,8 @@ Cursor.execute(
        StudentID INT NOT NULL,
        COLLEGE TEXT NOT NULL,
        GolfPlate INTEGER NOT NULL,
-       Date TEXT NOT NULL,
-       PRIMARY KEY (StudentID, GolfPlate)
+       Time TEXT NOT NULL,
+       Date TEXT NOT NULL 
     );"""
 )
 
-Cursor.execute(f'DROP TABLE IF EXISTS GALF')
