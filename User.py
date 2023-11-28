@@ -150,4 +150,3 @@ class User:
             self.Treeview_view.insert('', index='end', iid=count, text='', values=(Reserve[1], Reserve[2], Reserve[3], Reserve[4]))
             count += 1
         self.Treeview_view.pack(padx=10, pady=10)
-User(114, "Student")

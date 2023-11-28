@@ -3,136 +3,148 @@ from tkinter import ttk
 import sqlite3
 import tkinter.messagebox
 import hashlib
+from DB import * 
+import re
 
+Color = "#48A3BC"
+Font = ('Arial', 12, 'bold')
 
-class sing_up:
+class Sign_up:
     def __init__(self):
-        self.main_window = tkinter.Tk()
-        screen_width = self.main_window.winfo_screenwidth()
-        screen_height = self.main_window.winfo_screenheight()
-        self.main_window.geometry("{}x{}".format(screen_width, screen_height))
-        self.main_window.title('KSU Golf Carts Sing UP Window')
-        self.main_window.configure(bg='#48A3BC')
-        self.main_frame = tkinter.LabelFrame(self.main_window, bg='#89b7c4', text='شاشة التسجيل',
-                                             width=screen_width - 200, height=screen_height - 200, font=('Arial', 16))
-        self.fname_label = tkinter.Label(self.main_frame, bg='#89b7c4', text='الأسم الأول', font=('Arial', 12, 'bold'))
-        self.fname_entry = tkinter.Entry(self.main_frame, width=40, font=('Arial', 12, 'bold'))
-        self.lname_label = tkinter.Label(self.main_frame, bg='#89b7c4', text='الأسم الأخير', font=('Arial', 12, 'bold'))
-        self.lname_entry = tkinter.Entry(self.main_frame, width=40, font=('Arial', 12, 'bold'))
-        self.user_class_label = tkinter.Label(self.main_frame, bg='#89b7c4', text='الفئة', font=('Arial', 12, 'bold'))
-        self.class_var = tkinter.StringVar()
-        self.user_class = ttk.Combobox(self.main_frame,textvariable=self.class_var,width=38,height=10,font=('Arial', 12, 'bold'))
-        self.user_class['values']=['Student','Faculty','Employee']
-        self.stu_id_label = tkinter.Label(self.main_frame, bg='#89b7c4', text='رقم الطالب', font=('Arial', 12, 'bold'))
-        self.stu_id_entry = tkinter.Entry(self.main_frame, width=40, font=('Arial', 12, 'bold'))
-        self.password_label = tkinter.Label(self.main_frame, bg='#89b7c4', text='كلمة المرور',
-                                            font=('Arial', 12, 'bold'))
-        self.password_entry = tkinter.Entry(self.main_frame, width=40, font=('Arial', 12, 'bold'), show='*')
-        self.email_label = tkinter.Label(self.main_frame, bg='#89b7c4', text='الأيميل', font=('Arial', 12, 'bold'))
-        self.email_entry = tkinter.Entry(self.main_frame, width=40, font=('Arial', 12, 'bold'))
-        self.phone_label = tkinter.Label(self.main_frame, bg='#89b7c4', text='رقم الجوال', font=('Arial', 12, 'bold'))
-        self.phone_entry = tkinter.Entry(self.main_frame, width=40, font=('Arial', 12, 'bold'))
-        self.submit_bt = tkinter.Button(self.main_frame, text='إنشاء', width=15, height=2, font=('Arial', 12, 'bold'),
-                                        command=self.submit_table).grid(column=0, row=20, pady=50)
-        self.login_bt = tkinter.Button(self.main_frame, text='تسجيل الدخول ', width=15, height=2,
-                                       font=('Arial', 12, 'bold'), command=self.open_login).grid(column=3, row=20,pady=50)
-        self.main_frame.pack(fill='both', padx=50, pady=50)
+        self.window = tkinter.Tk()
+        screen_width = self.window.winfo_screenwidth()
+        screen_height = self.window.winfo_screenheight()
+        self.window.geometry("{}x{}".format(screen_width, screen_height))
+        self.window.title('KSU Golf Carts Sing UP Window')
+        self.window.configure(bg=Color) # AAAAAA
+        
+        # Sign up frame
+        self.Frame = tkinter.LabelFrame(self.window, bg=Color, text='Sign up Window', width=screen_width - 200, height=screen_height - 200, font=Font)
+        
+        #First name label and entry
+        self.fname_label = tkinter.Label(self.Frame, bg=Color, text="First Name", font=Font)
         self.fname_label.grid(row=4, column=0, pady=50)
+        self.fname_entry = tkinter.Entry(self.Frame, width=40, font=Font)
         self.fname_entry.grid(row=4, column=1, pady=50)
+
+        #Last name label and entry
+        self.lname_label = tkinter.Label(self.Frame, bg=Color, text="Last Name", font=Font)
         self.lname_label.grid(row=6, column=0, pady=10)
+        self.lname_entry = tkinter.Entry(self.Frame, width=40, font=Font)
         self.lname_entry.grid(row=6, column=1, pady=10)
-        self.stu_id_label.grid(column=0, row=10, pady=10)
-        self.stu_id_entry.grid(column=1, row=10, pady=10)
-        self.password_label.grid(column=0, row=12, pady=10)
-        self.password_entry.grid(column=1, row=12, pady=10)
-        self.email_label.grid(column=0, row=14, pady=10)
-        self.email_entry.grid(column=1, row=14, pady=10)
-        self.phone_label.grid(column=0, row=16, pady=10)
-        self.phone_entry.grid(column=1, row=16, pady=10)
+        
+        # user class
+        self.user_class_label = tkinter.Label(self.Frame, bg=Color, text="User Class", font=Font)
         self.user_class_label.grid(column=0, row=8, pady=10)
+        self.class_var = tkinter.StringVar()
+        self.user_class = ttk.Combobox(self.Frame,textvariable=self.class_var,width=38,height=10,font=Font)
+        self.user_class['values']=['Student','Faculty','Employee']
         self.user_class.grid(row=8,column=1,pady=10)
-        self.user_privilage_var = tkinter.StringVar()
-        self.user_privilage_label = tkinter.Label(self.main_frame, bg='#89b7c4', text='الصلاحيات',
-                                                  font=('Arial', 12, 'bold'))
-        self.pri_1 = tkinter.Radiobutton(self.main_frame, bg='#89b7c4', text='Admin', value='Admin',
-                                         font=('Arial', 12, 'bold'), variable=self.user_privilage_var)
-        self.pri_2 = tkinter.Radiobutton(self.main_frame, bg='#89b7c4', text='User', value='User',
-                                         font=('Arial', 12, 'bold'), variable=self.user_privilage_var)
-        self.user_privilage_var.set('User')
-        self.user_privilage_label.grid(row=18, column=0, pady=20)
-        self.pri_1.grid(row=18, column=1, pady=20)
-        self.pri_2.grid(row=18, column=2, pady=20)
-        self.main_window.mainloop()
 
-    def submit_table(self):
-        try:
-            connect_db = sqlite3.connect('D:\\Final_Project\\KSU_Golf_Carts\\Project_db.db')
-            listOfTables = connect_db.execute(
-                """SELECT Name FROM sqlite_schema WHERE type='table'
-                AND Name='students_info'; """).fetchall()
+        # student id
+        self.stu_id_label = tkinter.Label(self.Frame, bg=Color, text="ID", font=Font)
+        self.stu_id_label.grid(column=0, row=10, pady=10)
+        self.stu_id_entry = tkinter.Entry(self.Frame, width=40, font=Font)
+        self.stu_id_entry.grid(column=1, row=10, pady=10)
 
-            if listOfTables == []:
-                connect_db.execute('''CREATE TABLE students_info
-                            (student_id INT PRIMARY KEY NOT NULL,
-                            first_name TEXT NOT NULL,
-                            last_name TEXT  NULL,
-                            user_class TEXT NULL,
-                            Email TEXT NULL,
-                            password TEXT NULL,
-                            phone TEXT NULL,
-                            privilage_type Text);''')
-            else:
-                if len((self.phone_entry.get())) != 10:
-                    tkinter.messagebox.showerror('Error', 'رقم التليفون يجب ان يكون 10 ارقام و يبدأ ب05')
-                elif ((self.phone_entry.get()).startswith('05')) == False:
-                    tkinter.messagebox.showerror('Error', 'رقم التليفون يجب ان  يبدأ ب05')
-                elif len((self.password_entry.get())) < 6:
-                    tkinter.messagebox.showerror('Error', 'كلمة المرور يجب أن أن تكون من 6 حروف أو أرقام أو أكثر')
-                elif self.is_int(self.stu_id_entry.get()) == False:
-                    tkinter.messagebox.showerror('Error', 'رقم الطالب يجب أن يكون أرقام و لا يحتوي على حروف.')
-                elif self.class_var.get() == 'Student' and len(self.stu_id_entry.get()) != 10:
-                    tkinter.messagebox.showerror('Error', 'رقم الطالب يجب أن يكون 10 أرقام مع حالة الطالب')
-                elif self.class_var.get() in ('Faculty', 'Employee') and len(self.stu_id_entry.get()) != 6:
-                    tkinter.messagebox.showerror('Error', 'رقم الطالب يجب أن يكون 6 أرقام مع حالة الكلية أو الموظف')
-                elif (self.email_entry.get()).endswith('@ksu.edu.sa') == False:
-                    tkinter.messagebox.showerror('Error', 'قم بإدخال الأيميل بطريقة صحيحة@ksu.edu.sa')
-                else:
-                    data_insert_query = '''INSERT INTO students_info (student_id,first_name,last_name,user_class,Email,password,phone,privilage_type) \
-                        VALUES (?,?,?,?,?,?,?,?)'''
-                    data_insert_tuple = (
-                    self.stu_id_entry.get(), self.fname_entry.get(), self.lname_entry.get(), self.class_var.get(),
-                    self.email_entry.get(), hashlib.sha256(self.password_entry.get().encode()).hexdigest(),
-                    self.phone_entry.get(), self.user_privilage_var.get())
-                    connect_db.execute(data_insert_query, data_insert_tuple)
-                    connect_db.commit()
-                    connect_db.close()
-                    tkinter.messagebox.showinfo('Insert', 'تم أضافة الطالب بنجاح')
-        except sqlite3.IntegrityError:
-            tkinter.messagebox.showerror('Error', 'رقم الطالب مسجل بالفعل؟')
-            self.stu_id_entry.delete(0, 'end')
-        except:
-            connect_db = sqlite3.connect('D:\\Final_Project\\KSU_Golf_Carts\\Project_db.db')
-            data_insert_query = '''INSERT INTO students_info (student_id,first_name,last_name,user_class,Email,password,phone,privilage_type) \
-            VALUES (?,?,?,?,?,?,?)'''
-            data_insert_tuple = (
-            self.stu_id_entry.get(), self.fname_entry.get(), self.lname_entry.get(), self.user_class.get(),
-            self.email_entry.get(), hashlib.sha256(self.password_entry.get().encode()).hexdigest(),
-            self.phone_entry.get(), self.user_privilage_var.get())
-            connect_db.execute(data_insert_query, data_insert_tuple)
-            connect_db.commit()
-            connect_db.close()
-            tkinter.messagebox.showinfo('Insert', 'تم أضافة الطالب بنجاح')
+        # password
+        self.password_label = tkinter.Label(self.Frame, bg=Color, text="Password", font=Font)
+        self.password_label.grid(column=0, row=12, pady=10)
+        self.password_entry = tkinter.Entry(self.Frame, width=40, font=Font, show='*')
+        self.password_entry.grid(column=1, row=12, pady=10)
+
+        #email
+        self.email_label = tkinter.Label(self.Frame, bg=Color, text="Email", font=Font)
+        self.email_label.grid(column=0, row=14, pady=10)
+        self.email_entry = tkinter.Entry(self.Frame, width=40, font=Font)
+        self.email_entry.grid(column=1, row=14, pady=10)
+        
+        # Phone number
+        self.phone_label = tkinter.Label(self.Frame, bg=Color, text="Phone Number", font=Font)
+        self.phone_label.grid(column=0, row=16, pady=10)
+        self.phone_entry = tkinter.Entry(self.Frame, width=40, font=Font)
+        self.phone_entry.grid(column=1, row=16, pady=10)
+
+        # Submit Button
+        self.submit_bt = tkinter.Button(self.Frame, text="Submit", width=15, height=1, font=Font, command=self.Validation)
+        self.submit_bt.grid(column=0, row=20, pady=50, padx=10)
+        
+        # Login button
+        self.login_bt = tkinter.Button(self.Frame, text="Login", width=15, height=1, font=Font, command=self.open_login)
+        self.login_bt.grid(column=3, row=20,pady=50)
+        
+        
+        self.Frame.pack(fill='both', padx=50, pady=50)
+        self.window.mainloop()
+
+    
+    def checkIfAlreadyThere(self):
+        for Row in Cursor.execute("""SELECT * FROM STUDENT""") :
+            if Row[0] == self.stu_id_entry.get() or Row[4] == self.email_entry.get() or Row[6] == self.phone_entry.get():
+                return False
+        return True
+
+    def Validation(self):
+        StudentID = self.stu_id_entry.get()
+        FirstName = self.fname_entry.get()
+        LastName = self.lname_entry.get()
+        UserClass = self.class_var.get()
+        Email = self.email_entry.get()
+        Password = self.password_entry.get()
+        Phone = self.phone_entry.get()
+
+        # check the entry 
+        check = len(FirstName) > 0 and FirstName.isalpha()
+        if check is True :
+            check = len(LastName) > 0 and LastName.isalpha()
+            if check is True :
+                check = (UserClass == "Student" and len(StudentID) == 10 and StudentID.isdecimal()) or (UserClass == "Faculty" or UserClass == "Employee" and len(StudentID) == 6 and StudentID.isdecimal())
+                if check is True :
+                    check = len(Password) >= 6 and Password.isalnum()
+                    if check is True :
+                        check = re.match("^[a-zA-Z0-9-_]+@[a-z]+\.[a-z]+\.[a-z]{1,2}$", Email) and Email.endswith("@ksu.edu.sa")
+                        if check is True:
+                            check = len(Phone) == 10 and Phone.startswith("05") and Phone.isdecimal()
+                            if check is True :
+                                check = UserClass == "Student" or UserClass == "Employee" or UserClass == "Faculty"                                   
+                                if check is True :
+                                    if self.checkIfAlreadyThere() :
+                                        Password = hashlib.sha256(self.password_entry.get().encode()).hexdigest()
+
+                                        Cursor.execute("""INSERT INTO STUDENT (StudentID, FirstName, LastName, UserClass, Email, Password, Phone) 
+                                        VALUES (?,?,?,?,?,?,?)""", (StudentID, FirstName, LastName, UserClass, Email, Password, Phone))
+                                        Connection.commit()
+                                        tkinter.messagebox.showinfo("Welcome", "Account created successfully")
+                                        self.fname_entry.delete(0, "end")
+                                        self.lname_entry.delete(0, "end")
+                                        self.stu_id_entry.delete(0, "end")
+                                        self.email_entry.delete(0, "end")
+                                        self.password_entry.delete(0, "end")
+                                        self.phone_entry.delete(0, "end")
+                                        self.user_class.delete(0, "end")
+                                        self.window.destroy()
+                                        from Log_IN import Login_W
+                                        Login_W(self.class_var.get())
+                                    else :
+                                        tkinter.messagebox.showerror("Error", "The User is already exist")
+                                else :
+                                    tkinter.messagebox.showerror("Error", "Select a correct User class")
+                            else :
+                                tkinter.messagebox.showerror("Error", "Phone number must be start with 05")
+                        else :
+                            tkinter.messagebox.showerror("Error", "Your Email must end with @ksu.edu.sa")
+                    else :
+                        tkinter.messagebox.showerror("Error", "Check your Password")
+                else :
+                    tkinter.messagebox.showerror("Error", "ID must be 10 digit for Student and 6 for Faculty and Employee and a number")
+            else :
+                tkinter.messagebox.showerror("Error", "Last name must be string and not empty")
+        else :
+            tkinter.messagebox.showerror("Error", "First name must be string and not empty")
 
     def open_login(self):
-        self.main_window.destroy()
+        self.window.destroy()
         from Log_IN import Login_W
-        Login_W()       
-
-    def is_int(self, x):
-        try:
-            x = int(x)
-            return True
-        except:
-            return False
+        Login_W("Student")
         
-sing_up()
+Sign_up()

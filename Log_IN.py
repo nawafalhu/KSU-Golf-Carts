@@ -7,13 +7,14 @@ Color = "#48A3BC"
 Font = ('Arial', 12, 'bold')
 
 class Login_W:
-    def __init__(self):
+    def __init__(self, user_class):
         self.Login = tk.Tk()
         self.Login.title("Login")
         screen_width = self.Login.winfo_screenwidth()
         screen_height = self.Login.winfo_screenheight()
         self.Login.geometry("{}x{}".format(screen_width, screen_height))
         self.Login.config(padx=350, pady=100, bg=Color)
+        self.Userclass = user_class
         self.UserID = tk.Label(self.Login, text="ID",font=Font, bg=Color, justify=tk.CENTER)
         self.UserID.grid(row=0, column=0)
         self.IDText = tk.Entry(self.Login, width=40,highlightthickness=1,  justify=tk.CENTER, font=Font)
@@ -55,7 +56,7 @@ class Login_W:
         else:
             pas = hashlib.sha256(self.Password.get().encode()).hexdigest()
             pasDB = ''
-            for x in Cursor.execute(f"""SELECT * FROM STUDENT WHERE SID = {self.IDText.get()}"""):
+            for x in Cursor.execute(f"""SELECT * FROM STUDENT WHERE SID = '{self.IDText.get()}'"""):
                 pasDB = x[2]
             if pas != pasDB:
                 tk.messagebox.showerror("Error", "Password is Incorrect")
@@ -66,9 +67,9 @@ class Login_W:
         self.Login.update()
         self.Login.destroy()
         from User import User
-        User()
+        User(self.IDText.get(), self.Userclass)
 
     def go_signup(self):
         self.Login.destroy()
-        from Sing_UP import sing_up
-        sing_up()
+        from Sing_UP import Sign_up
+        Sign_up()
