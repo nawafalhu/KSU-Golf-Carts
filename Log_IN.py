@@ -66,6 +66,9 @@ class Login_W:
             else:
                 self.go_user()
     def go_user(self):
+        if len(self.IDText.get()) == 6:
+            self.Userclass = "Employee"
+        print(self.Userclass)
         self.Login.update()
         self.Login.destroy()
         from User import UserW

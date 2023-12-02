@@ -79,8 +79,6 @@ class Sign_up:
         
         
         self.Frame.pack(fill='both', padx=50, pady=50)
-        self.window.mainloop()
-
     
     def checkIfAlreadyThere(self):
         for Row in Cursor.execute("""SELECT * FROM STUDENT""") :
@@ -148,9 +146,11 @@ class Sign_up:
             tkinter.messagebox.showerror("Error", "First name must be string and not empty")
 
     def open_login(self):
+        self.window.update()
         self.window.destroy()
         from Log_IN import Login_W
         Login_W("Student")
         
-        
-Sign_up()
+if __name__ == "__main__":
+    mywindow = Sign_up()
+    mywindow.window.mainloop()

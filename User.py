@@ -85,13 +85,18 @@ class UserW:
         Faculty_Time = ['8:00-9:00', '9:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00']
         Employee_Time = ['8:00-9:30', '9:30-11:00', '11:00-12:30', '12:30-14:00']
 
-        if self.User_Class == 'Student' :
-            self.Times = ttk.Combobox(self.Reserve_Tab, values=Student_Time, width=10)
-        elif self.User_Class == 'Faculty' :
-            self.Times = ttk.Combobox(self.Reserve_Tab, values=Faculty_Time, width=10)
+        self.Times = ttk.Combobox(self.Reserve_Tab, width=10)
+        print(self.User_Class)
+        if self.User_Class == 'Faculty' :
+            self.Times['values'] = Faculty_Time
+            print("Setting values to Faculty_Time")
         elif self.User_Class == 'Employee' :
-            self.Times = ttk.Combobox(self.Reserve_Tab, values=Employee_Time, width=10)
-
+            self.Times['values'] = Employee_Time
+            print("Setting values to Employee_Time")    
+        elif self.User_Class == 'Student':
+            self.Times['values'] = Student_Time
+            print("Setting values to Student_Time")
+            
         self.Times.set(Student_Time[0])
         self.Times.place(x=610, y=80)
 
@@ -115,7 +120,7 @@ class UserW:
 
     def logout(self):
         self.window.destroy()
-        Sing_UP.sing_up()
+        Sing_UP.Sign_up()
 
     def Date(self):
         self.Dates = f"{self.calender.get_date()}"
