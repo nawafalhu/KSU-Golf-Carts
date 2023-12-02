@@ -47,17 +47,19 @@ class Login_W:
         else:
             self.accept()
     def accept(self):
+        self.StID = int(self.IDText.get())
         IDlist=[]
         for i in Cursor.execute("""SELECT * FROM STUDENT"""):
-            IDlist.append(i[1])
-        if self.IDText.get() not in IDlist:
+            IDs = int(i[0])
+            IDlist.append(IDs)
+        if self.StID not in IDlist:
             tk.messagebox.showerror('Error','The ID not found')
             return
         else:
-            pas = hashlib.sha256(self.Password.get().encode()).hexdigest()
+            pas = hashlib.sha256(self.passwordText.get().encode()).hexdigest()
             pasDB = ''
-            for x in Cursor.execute(f"""SELECT * FROM STUDENT WHERE SID = '{self.IDText.get()}'"""):
-                pasDB = x[2]
+            for x in Cursor.execute(f"""SELECT * FROM STUDENT WHERE StudentID = '{self.IDText.get()}'"""):
+                pasDB = x[5]
             if pas != pasDB:
                 tk.messagebox.showerror("Error", "Password is Incorrect")
                 return
@@ -66,10 +68,12 @@ class Login_W:
     def go_user(self):
         self.Login.update()
         self.Login.destroy()
-        from User import User
-        User(self.IDText.get(), self.Userclass)
+        from User import UserW
+        UserW(ID=self.StID, User_Class=self.Userclass)
+        
 
     def go_signup(self):
         self.Login.destroy()
         from Sing_UP import Sign_up
         Sign_up()
+        

@@ -4,11 +4,14 @@ from tkinter import ttk
 from tkcalendar import Calendar
 from tkinter import messagebox
 from DB import *
+import logging
+from datetime import datetime
 
 Color = "#48A3BC"
 Font = ('Arial', 12, 'bold')
 
-class User:
+
+class UserW:
     def __init__(self, ID, User_Class):
         self.window = tk.Tk()
         self.window.title("User Window")
@@ -133,7 +136,8 @@ class User:
                 Cursor.execute("""INSERT INTO RESERVATIONS (StudentID, COLLEGE, GolfPlate, Time, Date)
                                 VALUES (?, ?, ?, ?, ?)""", (self.StudentID, self.College_Selected, self.Golf_Selected, self.DateTime, self.Dates))
                 Connection.commit()
-                messagebox.showinfo('Done', 'Your Reservation is Complete')                  
+                messagebox.showinfo('Done', 'Your Reservation is Complete')
+                logging.info(f'Reservation is Complete ID: {self.StudentID} , College: {self.College_Selected}, Golf Plate: {self.Golf_Selected}, Reserve Time: {self.DateTime}, Reserve Date: {self.Dates}')                  
 
             except AttributeError:
                 messagebox.showerror("Error", "Select Date First")

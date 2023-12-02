@@ -48,8 +48,8 @@ class Admin:
    def logout(self):
       self.window.update()
       self.window.destroy()
-      from Sing_UP import sing_up
-      sing_up()
+      from Sing_UP import Sign_up
+      Sign_up()
 
    def Validation(self) :
       GolfPlate = self.Golf_Plate_Entry.get()

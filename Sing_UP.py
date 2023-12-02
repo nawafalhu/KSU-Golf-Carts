@@ -5,9 +5,13 @@ import tkinter.messagebox
 import hashlib
 from DB import * 
 import re
+import logging
+from datetime import datetime
 
 Color = "#48A3BC"
 Font = ('Arial', 12, 'bold')
+
+logging.basicConfig(filename='logging.log', filemode='a', format='%(asctime)s - %(message)s', level=logging.INFO)
 
 class Sign_up:
     def __init__(self):
@@ -115,6 +119,7 @@ class Sign_up:
                                         VALUES (?,?,?,?,?,?,?)""", (StudentID, FirstName, LastName, UserClass, Email, Password, Phone))
                                         Connection.commit()
                                         tkinter.messagebox.showinfo("Welcome", "Account created successfully")
+                                        logging.info(f"Create Account ID: {StudentID}")
                                         self.fname_entry.delete(0, "end")
                                         self.lname_entry.delete(0, "end")
                                         self.stu_id_entry.delete(0, "end")
@@ -146,5 +151,6 @@ class Sign_up:
         self.window.destroy()
         from Log_IN import Login_W
         Login_W("Student")
+        
         
 Sign_up()
