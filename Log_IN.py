@@ -7,14 +7,13 @@ Color = "#48A3BC"
 Font = ('Arial', 12, 'bold')
 
 class Login_W:
-    def __init__(self, user_class):
+    def __init__(self):
         self.Login = tk.Tk()
         self.Login.title("Login")
         screen_width = self.Login.winfo_screenwidth()
         screen_height = self.Login.winfo_screenheight()
         self.Login.geometry("{}x{}".format(screen_width, screen_height))
         self.Login.config(padx=350, pady=100, bg=Color)
-        self.Userclass = user_class
         self.UserID = tk.Label(self.Login, text="ID",font=Font, bg=Color, justify=tk.CENTER)
         self.UserID.grid(row=0, column=0)
         self.IDText = tk.Entry(self.Login, width=40,highlightthickness=1,  justify=tk.CENTER, font=Font)
@@ -66,9 +65,8 @@ class Login_W:
             else:
                 self.go_user()
     def go_user(self):
-        if len(self.IDText.get()) == 6:
-            self.Userclass = "Employee"
-        print(self.Userclass)
+        for userclass in Cursor.execute(f"""SELECT UserClass FROM STUDENT WHERE StudentID == '{self.StID}'""") :
+            self.Userclass = userclass
         self.Login.update()
         self.Login.destroy()
         from User import UserW

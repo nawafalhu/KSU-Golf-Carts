@@ -149,7 +149,7 @@ class Sign_up:
         self.window.update()
         self.window.destroy()
         from Log_IN import Login_W
-        Login_W("Student")
+        Login_W()
         
 if __name__ == "__main__":
     mywindow = Sign_up()

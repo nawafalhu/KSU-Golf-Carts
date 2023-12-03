@@ -21,7 +21,7 @@ class UserW:
         self.window.config(padx=10, pady=80, bg=Color)
 
         self.StudentID = ID
-        self.User_Class = User_Class
+        self.UserClass = User_Class[0]
 
         # Create a Tabs
         self.Tabs = ttk.Notebook(self.window, width=800, height=350)
@@ -86,16 +86,12 @@ class UserW:
         Employee_Time = ['8:00-9:30', '9:30-11:00', '11:00-12:30', '12:30-14:00']
 
         self.Times = ttk.Combobox(self.Reserve_Tab, width=10)
-        print(self.User_Class)
-        if self.User_Class == 'Faculty' :
+        if self.UserClass == 'Faculty' :
             self.Times['values'] = Faculty_Time
-            print("Setting values to Faculty_Time")
-        elif self.User_Class == 'Employee' :
+        elif self.UserClass == 'Employee' :
             self.Times['values'] = Employee_Time
-            print("Setting values to Employee_Time")    
-        elif self.User_Class == 'Student':
+        elif self.UserClass == 'Student':
             self.Times['values'] = Student_Time
-            print("Setting values to Student_Time")
             
         self.Times.set(Student_Time[0])
         self.Times.place(x=610, y=80)
@@ -154,7 +150,7 @@ class UserW:
                 messagebox.showerror("Error", "Select Another Date and Golf Cart")
                 return False
     def ViewMyReservations(self):
-        count = 0
+        count = 1
         for Reserve in Cursor.execute(f"""SELECT * FROM RESERVATIONS WHERE StudentID == '{self.StudentID}' """) :
             self.Treeview_view.insert('', index='end', iid=count, text='', values=(Reserve[1], Reserve[2], Reserve[3], Reserve[4]))
             count += 1

@@ -1,3 +1,16 @@
 2023-12-02 11:36:49,085 - Create Account ID: 1234567890
 2023-12-02 11:39:20,266 - Reservation is Complete ID: 1234567890 , College: Computer Sciences, Golf Plate: 124, Reserve Time: 9:30-10:00, Reserve Date: 1/3/23
 2023-12-02 11:50:22,339 - Create Account ID: 999999
+2023-12-02 15:59:50,326 - Create Account ID: 888888
+2023-12-02 16:34:03,192 - Reservation is Complete ID: 1111111111 , College: Engineering, Golf Plate: 1236, Reserve Time: 8:00-8:30, Reserve Date: 1/12/23
+2023-12-02 17:15:43,905 - Reservation is Complete ID: 888888 , College: Architecture and Planning, Golf Plate: 444, Reserve Time: 13:00-14:00, Reserve Date: 1/17/23
+2023-12-02 17:16:12,840 - Reservation is Complete ID: 888888 , College: Architecture and Planning, Golf Plate: 444, Reserve Time: 12:00-13:00, Reserve Date: 1/17/23
+2023-12-02 17:16:33,570 - Reservation is Complete ID: 888888 , College: Architecture and Planning, Golf Plate: 444, Reserve Time: 9:00-10:00, Reserve Date: 1/12/23
+2023-12-02 17:16:41,224 - Reservation is Complete ID: 888888 , College: Computer Sciences, Golf Plate: 231, Reserve Time: 9:00-10:00, Reserve Date: 1/12/23
+2023-12-02 17:17:27,519 - Reservation is Complete ID: 1111111111 , College: Computer Sciences, Golf Plate: 231, Reserve Time: 10:00-10:30, Reserve Date: 1/10/23
+2023-12-02 17:18:42,002 - Reservation is Complete ID: 1111111111 , College: Engineering, Golf Plate: 1232, Reserve Time: 11:00-11:30, Reserve Date: 1/26/23
+2023-12-02 17:18:58,549 - Reservation is Complete ID: 1111111111 , College: Engineering, Golf Plate: 1232, Reserve Time: 11:30-12:00, Reserve Date: 1/26/23
+2023-12-03 17:52:08,754 - Reservation is Complete ID: 999999 , College: Computer Sciences, Golf Plate: 231, Reserve Time: 8:00-9:30, Reserve Date: 1/11/23
+2023-12-03 17:52:21,574 - Reservation is Complete ID: 999999 , College: Computer Sciences, Golf Plate: 231, Reserve Time: 9:30-11:00, Reserve Date: 1/11/23
+2023-12-03 17:53:46,907 - Reservation is Complete ID: 999999 , College: Architecture and Planning, Golf Plate: 21, Reserve Time: 8:00-9:30, Reserve Date: 1/4/23
+2023-12-03 17:54:06,280 - Reservation is Complete ID: 999999 , College: Architecture and Planning, Golf Plate: 21, Reserve Time: 11:00-12:30, Reserve Date: 1/4/23
