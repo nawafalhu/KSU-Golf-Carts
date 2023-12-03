@@ -133,7 +133,7 @@ class Sign_up:
                                 else :
                                     tkinter.messagebox.showerror("Error", "Select a correct User class")
                             else :
-                                tkinter.messagebox.showerror("Error", "Phone number must be start with 05")
+                                tkinter.messagebox.showerror("Error", "check your phone")
                         else :
                             tkinter.messagebox.showerror("Error", "Your Email must end with @ksu.edu.sa")
                     else :
