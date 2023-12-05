@@ -81,9 +81,9 @@ class Admin:
             # Golf is already exist
             # Enter a digit number
             # College is not correct
-            messagebox.showerror("Error", "Something wrong")
+            messagebox.showerror("Error", "Something wrong, Try again")
       except sqlite3.IntegrityError:
-         messagebox.showerror("Error", "Something wrong")
+         messagebox.showerror("Error", "Something wrong, Try again")
 
    def BackUpButton(self) :
       # Student 

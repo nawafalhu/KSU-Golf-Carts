@@ -150,8 +150,11 @@ class UserW:
                 messagebox.showerror("Error", "Select Another Date and Golf Cart")
                 return False
     def ViewMyReservations(self):
-        count = 1
-        for Reserve in Cursor.execute(f"""SELECT * FROM RESERVATIONS WHERE StudentID == '{self.StudentID}' """) :
-            self.Treeview_view.insert('', index='end', iid=count, text='', values=(Reserve[1], Reserve[2], Reserve[3], Reserve[4]))
-            count += 1
-        self.Treeview_view.pack(padx=10, pady=10)
+        try:
+            count = 1
+            for Reserve in Cursor.execute(f"""SELECT * FROM RESERVATIONS WHERE StudentID == '{self.StudentID}' """) :
+                self.Treeview_view.insert('', index='end', iid=count, text='', values=(Reserve[1], Reserve[2], Reserve[3], Reserve[4]))
+                count += 1
+            self.Treeview_view.pack(padx=10, pady=10)
+        except Exception :
+            messagebox.showerror("Error", "Try again")
