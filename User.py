@@ -20,6 +20,7 @@ class UserW:
         self.window.geometry("{}x{}".format(screen_width, screen_height))
         self.window.config(padx=10, pady=80, bg=Color)
 
+        self.count = 0
         self.StudentID = ID
         self.UserClass = User_Class[0]
 
@@ -151,10 +152,9 @@ class UserW:
                 return False
     def ViewMyReservations(self):
         try:
-            count = 1
             for Reserve in Cursor.execute(f"""SELECT * FROM RESERVATIONS WHERE StudentID == '{self.StudentID}' """) :
-                self.Treeview_view.insert('', index='end', iid=count, text='', values=(Reserve[1], Reserve[2], Reserve[3], Reserve[4]))
-                count += 1
+                self.Treeview_view.insert('', index='end', iid=self.count, text='', values=(Reserve[1], Reserve[2], Reserve[3], Reserve[4]))
+                self.count += 1
             self.Treeview_view.pack(padx=10, pady=10)
         except Exception :
             messagebox.showerror("Error", "Try again")

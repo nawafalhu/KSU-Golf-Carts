@@ -127,7 +127,7 @@ class Sign_up:
                                         self.user_class.delete(0, "end")
                                         self.window.destroy()
                                         from Log_IN import Login_W
-                                        Login_W(self.class_var.get())
+                                        Login_W()
                                     else :
                                         tkinter.messagebox.showerror("Error", "The User is already exist")
                                 else :
